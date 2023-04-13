@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>{{ question.subject }}</h1>
+    <div>{{ question.content }}</div>
+
+    <hr>
+    <h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
+    <div>
+        <ul>
+            {% for answer in question.answer_set.all  %}
+                <li>{{ answer.content }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <hr>
+
+    <form action="{% url 'pybo:answer_create' question.id %}" method="post">
+        {% csrf_token %} <!-- CSRF 공격을 막기 위해 명시적으로 넣어줘야 실행됨.-->
+        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+        <input type="submit" value = "답변등록">
+    </form>
+</body>
+</html>
